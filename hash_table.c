@@ -91,7 +91,7 @@ val_t *get(map_t *m, const key_t k)
     for(;;)
         if (m->compare(k, bkt->key) == 0){
             return &(bkt->val);
-        } else if (bkt->next == NULL) {
+        } else if (bkt->next != NULL) {
             bkt = bkt->next;
         } else {
             return NULL;
