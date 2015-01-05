@@ -16,9 +16,6 @@ getMin (Node l v r) = (vv, Node ll v r)
 
 bstDelete :: (Ord a, Eq a) => (BST a) -> a -> (BST a)
 bstDelete Empty a = Empty
-bstDelete (Node Empty v Empty) x
-  | x == v = Empty
-  | otherwise = Node Empty v Empty
 bstDelete (Node Empty v r) x
   | x == v = r
   | x > v = Node Empty v (bstDelete r x)
