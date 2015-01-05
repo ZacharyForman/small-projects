@@ -8,6 +8,30 @@ bstInsert (Node l v r) n
   | n > v = Node l v (bstInsert r n)
   | n < v = Node (bstInsert l n) v r
 
+getMin :: (Ord a, Eq a) => (BST a) -> (a, BST a)
+getMin Empty = error "no tree"
+getMin (Node Empty v r) = (v, r)
+getMin (Node l v r) = getMin l
+
+bstDelete :: (Ord a, Eq a) => (BST a) -> a -> (BST a)
+bstDelete Empty a = Empty
+bstDelete (Node Empty v Empty) x
+  | x == v = Empty
+  | otherwise = Node Empty v Empty
+bstDelete (Node Empty v r) x
+  | x == v = r
+  | x > v = Node Empty v (bstDelete r x)
+  | otherwise = Node Empty v r
+bstDelete (Node l v Empty) x
+  | x == v = l
+  | x < v = Node (bstDelete l x) v Empty
+  | otherwise = Node l v Empty
+bstDelete (Node l v r) x
+  | x > v = Node l v (bstDelete r x)
+  | x < v = Node (bstDelete l x) v r
+  | x == v = Node l (fst t) (snd t)
+    where t = getMin r
+
 preOrder :: (Ord a, Eq a) => (a -> b) -> (BST a) -> [b]
 preOrder f Empty = []
 preOrder f (Node l n r) = [f n] ++ preOrder f l ++ preOrder f r
