@@ -4,7 +4,7 @@ head' [] = error "empty list"
 
 map' :: (a -> b) -> [a] -> [b]
 map' f [] = []
-map' f (a:b) = [f a] ++ map f b
+map' f (a:b) = (f a) : map f b
 
 reduce' :: (b -> a -> b) -> [a] -> b -> b
 reduce' f (l:r) b
