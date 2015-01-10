@@ -4,7 +4,7 @@
 int get_max_sum(int **m, int c, int r)
 {
   // allocate memory for array of partial sums
-  int **partials = new int[r];
+  int **partials = new int*[r];
   for (int i = 0; i < r; i++) {
     partials[i] = new int[c];
   }
@@ -30,15 +30,15 @@ int get_max_sum(int **m, int c, int r)
       for (int k = 0; k < c; k++) {
         int val = sum + (partials[i][k] - partials[j][k]);
         // Update current best.
-        if (val > max) {
-          best = val;
+        if (val > arr_best) {
+          arr_best = val;
         }
         // Update sum
         sum = val > 0 ? val : 0;
       }
       // Update current matrix best
       if (arr_best > mat_best) {
-        mat_best = best;
+        mat_best = arr_best;
       }
     }
   }
