@@ -1,4 +1,5 @@
 #include <climits>
+#include <cstdio>
 
 // Get the maximum sum of a submatrix in m.
 int get_max_sum(int **m, int c, int r)
@@ -22,13 +23,13 @@ int get_max_sum(int **m, int c, int r)
 
   int mat_best = INT_MIN;
   // look through all the pairs of top and bottom rows
-  for (int i = 0; i < r-1; i++) {
-    for (int j = i+1; j < r; j++) {
+  for (int i = 0; i < r; i++) {
+    for (int j = i; j < r; j++) {
       // Find the best subarray of the array.
       int sum = 0;
       int arr_best = INT_MIN;
       for (int k = 0; k < c; k++) {
-        int val = sum + (partials[i][k] - partials[j][k]);
+        int val = sum + (partials[j][k] - partials[i][k] + m[i][k]);
         // Update current best.
         if (val > arr_best) {
           arr_best = val;
