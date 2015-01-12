@@ -1,4 +1,4 @@
-
+#include <cstdio>
 void fizzbuzz(int n)
 {
   for (int i = 1; i <= n; i++ ) {
@@ -15,6 +15,7 @@ void fizzbuzz(int n)
 }
 //t = 2 minutes.
 
+#include <cstdio>
 void fizzbuzz(int n)
 {
   for (int i = 1; i <= n; i++) {
