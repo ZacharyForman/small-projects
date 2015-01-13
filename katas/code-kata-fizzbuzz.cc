@@ -14,3 +14,19 @@ void fizzbuzz(int n)
   }
 }
 //t = 2 minutes.
+
+void fizzbuzz(int n)
+{
+  for (int i = 1; i <= n; i++) {
+    if (i%5==0 && i%3 == 0) {
+      printf("fizzbuzz\n");
+    } else if (i % 5 == 0) {
+      printf("fizz\n");
+    } else if (i% 3 == 0) {
+      printf("buzz\n");
+    } else {
+      printf("%d\n", i);
+    }
+  }
+}
+// t = 1:30
