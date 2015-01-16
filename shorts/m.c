@@ -1,0 +1,1 @@
+m(int*a,int s){int v=0,m=1<<31;for(;s-->0;){v+=a[s];m=v>m?v:m;v=v>0?v:0;}return m;}
