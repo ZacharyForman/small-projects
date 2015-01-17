@@ -1,0 +1,13 @@
+std::string SPrintf(const std::string &fmt, ...)
+{
+  char *s;
+  va_list args;
+  va_start(args, fmt);
+  if (vasprintf(&s, fmt.c_str(), args) <= 0) {
+    return "";
+  }
+  va_end(args);
+  std::string str(s);
+  free(s);
+  return str;
+}
