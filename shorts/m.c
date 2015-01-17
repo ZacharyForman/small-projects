@@ -1,1 +1,1 @@
-m(int*a,int s){int v=0,m=1<<31;for(;s--;){v+=a[s];m=v>m?v:m;v=v>0?v:0;}return m;}
+m(int*a,int s){int v=0,m=1<<31;for(;s--;m=v>m?v:m,v=v>0?v:0)v+=a[s];return m;}
