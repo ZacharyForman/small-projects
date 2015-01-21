@@ -26,3 +26,18 @@ void quicksort(int *lb, int *ub)
   quicksort(lb, low-1);
   quicksort(high+1, ub);
 }
+
+void selection_sort(int *arr, int sz)
+{
+  for (int i = 0; i < sz; i++) {
+    int max = 0;
+    for (int j = 0; j < sz-i; j++) {
+      if (arr[j] > arr[max]) {
+        max = j;
+      }
+    }
+    int tmp = arr[max];
+    arr[max] = arr[sz-1-i];
+    arr[sz-1-1] = tmp;
+  }
+}
