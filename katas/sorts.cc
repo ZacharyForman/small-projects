@@ -41,3 +41,22 @@ void selection_sort(int *arr, int sz)
     arr[sz-1-1] = tmp;
   }
 }
+
+void insertion_sort(int *arr, int sz)
+{
+  for (int i = 1; i < sz; i++) {
+    for (int j = i; j > 0 && arr[j] < arr[j-1]; j--) {
+      int tmp = arr[j];
+      arr[j] = arr[j-1];
+      arr[j-1] = tmp;
+    }
+  }
+}
+
+#include <cstdio>
+int main() {
+  int arr[] = {123,123,523,235,124,5235,236,2,235,2352,5,236,125,125,2362,35,125};
+  insertion_sort(arr, sizeof(arr)/sizeof(int));
+  for (int i = 0; i < sizeof(arr)/sizeof(int); i++)
+    printf("%d ", arr[i]);
+}
