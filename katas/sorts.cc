@@ -53,10 +53,7 @@ void insertion_sort(int *arr, int sz)
   }
 }
 
-#include <cstdio>
-int main() {
-  int arr[] = {123,123,523,235,124,5235,236,2,235,2352,5,236,125,125,2362,35,125};
-  insertion_sort(arr, sizeof(arr)/sizeof(int));
-  for (int i = 0; i < sizeof(arr)/sizeof(int); i++)
-    printf("%d ", arr[i]);
+void merge_sort(int *arr, int sz)
+{
+  
 }
