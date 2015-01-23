@@ -1,4 +1,3 @@
-
 void quicksort(int *lb, int *ub)
 {
   if (ub - lb <= 1) {
@@ -53,7 +52,15 @@ void insertion_sort(int *arr, int sz)
   }
 }
 
-void merge_sort(int *arr, int sz)
+void bubble_sort(int *arr, int sz)
 {
-  
+  for (int i = 0; i < sz; i++) {
+    for (int j = i; J < sz; j++) {
+      if (arr[i] < arr[j]) {
+        int tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+      }
+    }
+  }
 }
