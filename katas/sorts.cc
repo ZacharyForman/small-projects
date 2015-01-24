@@ -1,5 +1,4 @@
 #include <algorithm>
-#include <chrono>
 #include <cstdio>
 #include <cstdlib>
 #include <cstring>
@@ -30,6 +29,11 @@ timespec diff(timespec start, timespec end)
     temp.tv_nsec = end.tv_nsec-start.tv_nsec;
   }
   return temp;
+}
+
+void std_sort(int *arr, int sz)
+{
+  std::sort(arr, arr+sz);
 }
 
 void quicksort(int *arr, int lb, int ub)
@@ -128,18 +132,22 @@ int main(int argc, char **argv)
                                selection_sort,
                                insertion_sort,
                                heap_sort,
-                               quicksort};
+                               quicksort,
+                               std_sort};
 
   const char *names[] = {"bubble_sort",
                          "selection_sort",
                          "insertion_sort",
                          "heap_sort",
-                         "quicksort"};
+                         "quicksort",
+                         "std_sort"};
 
   std::vector< std::vector<int> > sizes
                = {{1,2,5,10,50,100,500,1000,5000,10000,50000},
                   {1,2,5,10,50,100,500,1000,5000,10000,50000},
                   {1,2,5,10,50,100,500,1000,5000,10000,50000},
+                  {1,2,5,10,50,100,500,1000,5000,10000,50000,
+                   100000,500000,1000000,5000000,10000000},
                   {1,2,5,10,50,100,500,1000,5000,10000,50000,
                    100000,500000,1000000,5000000,10000000},
                   {1,2,5,10,50,100,500,1000,5000,10000,50000,
