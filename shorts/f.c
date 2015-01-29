@@ -1,0 +1,1 @@
+f(i,j,k){i=k?f(j,j+i,k-1):j;}main(a,b)int*b;{printf("%d",f(0,1,atoi(b[1])));}
