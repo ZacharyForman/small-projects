@@ -1,0 +1,1 @@
+ss(a,s,j,m)int*a;{for(;s--;){for(j=m=0;j<=s;j++)m=a[j]<a[m]?m:j;j=a[m];a[m]=a[s];a[s]=j;}}
