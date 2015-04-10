@@ -2,26 +2,50 @@ package main
 
 import "net/http"
 import "fmt"
+import "net"
+import "os"
+import "bufio"
+import "runtime"
+import "net/url"
 import "time"
 
-func resolve(url string, client http.Client) {
-	response, err := client.Get(url)
+func resolve(urlString string, client http.Client, responses chan<- string) {
+	response, err := client.Get(urlString)
+	host := "N/A"
 	if err != nil {
-		fmt.Println(err)
-		return
+		if dnsErr, ok := err.(*net.DNSError); ok {
+			host = dnsErr.Name
+		}
+		if urlError, ok := err.(*url.Error); ok {
+			if urlError.URL != urlString {
+				requestUrl, err := url.Parse(urlError.URL)
+				if err == nil {
+					host = requestUrl.Host
+				}
+			}
+		}
 	}
-	fmt.Println(response)
+	if response != nil {
+		host = response.Request.URL.Host
+	}
+	responses <- fmt.Sprintf("%s: %v", urlString, host)
 }
 
 func main() {
-
-	urls := []string{"http://bit.ly/a5aJTN", "http://ow.ly/179rAK", "http://bit.ly/dBOZBX",
-		"http://bit.ly/c2vsrm", "http://bit.ly/cBNpft", "http://www.twitter.com",
-		"http://www.tweeplesay.com", "http://www.pinay-chicken-heart.com",
-		"http://wwe.com"}
-
-	for _, url := range urls {
-		go resolve(url, http.Client{})
+	runtime.GOMAXPROCS(4)
+	scanner := bufio.NewScanner(os.Stdin)
+	hosts := make(chan string)
+	count := 0
+	client := http.Client{}
+	client.Timeout = 2 * time.Second
+	for scanner.Scan() {
+		count++
+		go resolve(scanner.Text(), client, hosts)
 	}
-	time.Sleep(5 * time.Second)
+
+	for count > 0 {
+		host := <-hosts
+		fmt.Println(host)
+		count--
+	}
 }
