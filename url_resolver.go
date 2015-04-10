@@ -38,9 +38,14 @@ func main() {
 	count := 0
 	client := http.Client{}
 	client.Timeout = 2 * time.Second
+	seen := make(map[string]struct{})
 	for scanner.Scan() {
-		count++
-		go resolve(scanner.Text(), client, hosts)
+		targetUrl := scanner.Text()
+		if _, there := seen[targetUrl]; !there {
+			count++
+			go resolve(targetUrl, client, hosts)
+			seen[targetUrl] = struct{}{}
+		}
 	}
 
 	for count > 0 {
