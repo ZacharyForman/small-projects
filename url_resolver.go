@@ -8,6 +8,7 @@ import "bufio"
 import "runtime"
 import "net/url"
 import "time"
+import "sync"
 
 func resolve(urlString string, client http.Client, responses chan<- string) {
 	response, err := client.Get(urlString)
@@ -35,22 +36,25 @@ func main() {
 	runtime.GOMAXPROCS(4)
 	scanner := bufio.NewScanner(os.Stdin)
 	hosts := make(chan string)
-	count := 0
 	client := http.Client{}
 	client.Timeout = 2 * time.Second
 	seen := make(map[string]struct{})
+	wg := sync.WaitGroup{}
+	go func() {
+		for host := range hosts {
+			fmt.Println(host)
+		}
+	}()
 	for scanner.Scan() {
 		targetUrl := scanner.Text()
 		if _, there := seen[targetUrl]; !there {
-			count++
-			go resolve(targetUrl, client, hosts)
+			wg.Add(1)
+			go func() {
+				defer wg.Done()
+				resolve(targetUrl, client, hosts)
+			}()
 			seen[targetUrl] = struct{}{}
 		}
 	}
-
-	for count > 0 {
-		host := <-hosts
-		fmt.Println(host)
-		count--
-	}
+	wg.Wait()
 }
